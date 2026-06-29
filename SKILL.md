@@ -121,16 +121,50 @@ description: Create a complete experiment report workflow with frontend visualiz
 - 所有图表都来自实际运行结果，非手工伪造。
 - 前端可直接展示，截图清晰，样式统一。
 - 前端必须先完成并经过用户确认，再写最终报告正文。
-- 用户确认效果之后，才写最终实验报告.md。
+- 用户确认效果之后，才写最终报告。
+- **最终报告同时产出两份：`实验报告.md` 和 `实验报告.docx`（缺一不可，详见「docx 交付规范」）。**
 - 心得感悟已做自然化处理。
 - 报告中所有图、表、结论都能追溯到实际数据。
 - **已完成至少 3 轮自检修复循环，且最后一轮无实质性问题。**
 - **每张截图已按 screenshot-manifest 执行，非随意截取。**
 - **截图自检通过：核心数据完整、标题未截断、无多余滚动条、无大面积空白。**
 - **截图文件路径与报告中的引用路径一致。**
+- **docx 自检通过：原生公式（非图片）/ 正文宋体五号 / 活序号 / 封面 / 目录 五项全部满足（见「docx 交付规范」）。**
+
+## docx 交付规范（强制，每次都要产出 docx）
+
+每次实验报告，在 `实验报告.md` 之外，**必须**同时产出一份 `实验报告.docx`。docx 不是 md 的简单导出，而是用 Node + `docx` 库按下列标准重新构建。三条硬性要求，**自检必须逐项验证**：
+
+### 三条硬性要求
+1. **公式必须是原生 OMML，禁止用图片。** 用 docx 的 `Math`（`OoxmlMath`）/`MathFraction`/`MathSuperScript`/`MathSubScript`/`MathRadical`/`MathSum` 等组件构造分数、上下标、根号、求和。只有当公式嵌套超过 3 层、或为矩阵/分段函数时，才允许 matplotlib PNG 兜底（极少见，需在自检里注明）。详见 `references/math-formulas.md` 的 LaTeX→docx 映射表。
+2. **正文一律宋体五号。** 五号 = 10.5pt = **21 half-points**（`size: 21`）。字体必须三属性齐全：`font: { ascii: "Times New Roman", hAnsi: "Times New Roman", eastAsia: "宋体" }`——**只设 ascii 不设 eastAsia 是最常见的坑**，会导致中文落到默认字体上。标题用黑体，正文用宋体。
+3. **序号用活序号（Word 自动编号），禁止死序号（手敲 1.2.3.）。** 用 `numbering` 的 abstractNum + `Paragraph({ numbering: { reference, level } })`。这样增删条目后序号自动重排。`步骤列表、目标列表、改进方向`等有顺序的内容都用活序号；无顺序的用项目符号。
+
+### docx 结构标准
+- **封面页**：校名/课程名/作业名/姓名学号（占位待填）/日期。封面单独成节，封面节末尾不留多余 PageBreak。
+- **目录页**：用 `TableOfContents` 自动生成，目录后**必须紧跟一个含 PageBreak 的段落**（否则目录和正文挤一页）。目录页提示用户右键「更新域」刷新页码。
+- **正文**：从「一、实验名称」开始的十章结构（见 `references/templates/report_template.md`），正文页码从 1 开始重新计数。
+- **行距 1.5 倍**（`line: 360`），正文首行缩进 2 字符（`firstLine: 480`）。
+- **图片**：截图必须带 `type: "png"`，按真实宽高比缩放，不要硬编宽高导致拉伸。
+
+### docx 自检（产出后必做，逐项确认）
+用脚本解压 docx 检查 `word/document.xml`：
+- [ ] 存在 `<m:oMath>`（原生公式），且无 `<w:drawing>`/`<pic:pic>` 仅用于公式（公式不是图）
+- [ ] 正文段落 `w:sz w:val="21"` 且含 `w:eastAsia="宋体"`（宋体五号）
+- [ ] 存在 `<w:numPr>` 且有 `word/numbering.xml` part（活序号自动编号）
+- [ ] 存在封面节 + `TableOfContents`（目录）
+- [ ] 报告中所有数字与 `results/*.json` 一致（沿用 md 自检逻辑）
+
+### docx 生成器模板
+完整的、可直接改用的 Node 生成脚本见 `references/templates/report_template_docx.js`。它封装了：宋体五号正文 helper、活序号 numbering、OMML 公式构造、封面、自动目录。**产出 docx 时以此为基础改造，不要从零写**（避免重复踩字体/序号的坑）。
+
+### 工具链前提
+- Node ≥ 18 + `docx` 库（`npm install docx image-size`）。
+- 若环境只有 python-docx、无 Node：python-docx 也能做 OMML（手注 oxml）和宋体五号，但自动编号和多级列表更繁琐，**优先用 Node + docx**。
 
 ## 参考文件
 - 详细报告模板见 references/templates/report_template.md
+- **docx 生成器模板见 references/templates/report_template_docx.js**
 - 交付检查与用户回收提醒见 references/checklist.md
 
 ## 如果用户没有给出更多限制
@@ -139,9 +173,10 @@ description: Create a complete experiment report workflow with frontend visualiz
 - 先做真实实验数据。
 - 先做前端展示并让用户确认。
 - 从前端里截图，整理到实验报告中。
-- 等用户确认后再写实验报告.md。
+- 等用户确认后再写报告。
+- **最终报告同时产出 `实验报告.md` 和 `实验报告.docx` 两份（见「docx 交付规范」）。**
 - 最后一章心得感悟使用 humanizer 风格处理。
-- **交付前执行至少 3 轮自检修复循环。**
+- **交付前执行至少 3 轮自检修复循环（md 自检 + docx 自检都要过）。**
 
 ## 截图清单方法论（Screenshot Manifest）
 
