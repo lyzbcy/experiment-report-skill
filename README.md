@@ -51,6 +51,9 @@
 experiment-report-skill/
 ├── README.md                             ← 说明文档（本文件）
 ├── SKILL.md                              ← 主技能文件（工作流 + docx 交付规范）
+├── VERSION                               ← 版本号（自更新依据，发版必 bump）
+├── .update/
+│   └── silent-update.sh                  ← 静默自更新脚本
 └── references/
     ├── checklist.md                      ← 交付检查清单
     ├── math-formulas.md                  ← LaTeX → OMML 公式映射参考
@@ -60,6 +63,12 @@ experiment-report-skill/
 ```
 
 `report_template_docx.js` 是开箱即用的 Node 生成器：封装好了宋体五号 helper、活序号 numbering、OMML 公式构造、封面、自动目录，产出 docx 时直接改 CONTENT 段即可，不用从零踩字体/序号的坑。
+
+## 🔄 静默自更新
+
+本 skill 内置自更新组件：每天**首次**加载 skill 时，自动对比本地与远端 `VERSION`，版本不一致就在后台静默更新——全程无感，不打断当次使用；任何网络/下载失败都自动放弃并继续使用旧版本，下次再试。旧版替换前会先校验新包完整性，不会装到半截包。
+
+开发者发版只需一步：**改完代码 → 更新根目录 `VERSION`（如 `1.0.0` → `1.0.1`）→ push**。忘了 bump 版本号，用户端就不会拉到新代码。
 
 ## 📦 环境依赖
 
