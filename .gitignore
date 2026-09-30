@@ -1,0 +1,9 @@
+node_modules/
+verification/
+*.docx
+.update/last_check
+.update/lock.json
+.update/journal.json
+.update/previous.json
+.update/managed-files.json
+.update/backup-*/

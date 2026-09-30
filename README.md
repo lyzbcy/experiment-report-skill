@@ -53,7 +53,8 @@ experiment-report-skill/
 ├── SKILL.md                              ← 主技能文件（工作流 + docx 交付规范）
 ├── VERSION                               ← 版本号（自更新依据，发版必 bump）
 ├── .update/
-│   └── silent-update.sh                  ← 静默自更新脚本
+│   ├── silent-update.sh                  ← 静默自更新脚本
+│   └── updater.cjs                       ← 跨平台更新、失败恢复与手动回滚
 └── references/
     ├── checklist.md                      ← 交付检查清单
     ├── math-formulas.md                  ← LaTeX → OMML 公式映射参考
@@ -62,19 +63,41 @@ experiment-report-skill/
         └── report_template_docx.js       ← 实验报告（docx）生成器模板 ⭐
 ```
 
-`report_template_docx.js` 是开箱即用的 Node 生成器：封装好了宋体五号 helper、活序号 numbering、OMML 公式构造、封面、自动目录，产出 docx 时直接改 CONTENT 段即可，不用从零踩字体/序号的坑。
+`report_template_docx.js` 封装了宋体五号、自动章节编号、独立列表编号、OMML 公式、封面和自动目录。复制到实验项目并填写 `REPORT`，或调用 `writeReport(report, output, baseDir)`。模板不会预填实验参数和结果；缺少正文或不足四张有效 PNG 截图会报错，防止交付空报告。图号与生成的引用按展示顺序统一计算。
+
+完整流程保持一致：真实实验 → 前端确认 → 至少四张真实截图 → md/docx 双交付 → 至少三轮自检。AI 不自行选择简化报告。
 
 ## 🔄 静默自更新
 
-本 skill 内置自更新组件：每天**首次**加载 skill 时，自动对比本地与远端 `VERSION`，版本不一致就在后台静默更新——全程无感，不打断当次使用；任何网络/下载失败都自动放弃并继续使用旧版本，下次再试。旧版替换前会先校验新包完整性，不会装到半截包。
+本 skill 在任务开始时每天最多检查一次更新，任务执行期间固定已加载的版本。Node 18+ 更新器把版本文件和 ZIP 固定到同一个 GitHub 提交，校验包内容后备份旧文件，再逐文件替换；替换失败自动恢复。进程中断时保留恢复记录，下次检查先恢复旧版。只接受更高版本，Git 开发副本不自动覆盖；网络失败静默继续使用本地版本。
+
+跨平台入口（包括原生 Windows，不需要 Git Bash）：
+
+```sh
+node "<skill目录>/.update/updater.cjs"
+```
+
+Git Bash / Linux / macOS 的旧入口 `bash "<skill目录>/.update/silent-update.sh"` 仍可使用。更新成功输出 `UPDATED x.y.z`。可用 `--force` 立即检查，忽略每日检查时间；不会绕过版本比较和包校验。
+
+最近一次成功更新前的文件保存在 `.update/backup-*`。需要恢复时执行：
+
+```sh
+node "<skill目录>/.update/updater.cjs" --rollback
+```
+
+手动回滚会恢复上一版并移除该次更新新增的文件，不触碰用户自建的无关文件。请保留 `.update/` 中的备份和恢复记录；如输出 `Rollback incomplete`，自动恢复尚未完成，不应继续声称安装完整。普通自动更新失败不打断使用，手动回滚失败则明确报错。
+
+从 1.0.0 迁移的首次更新仍由旧脚本执行；旧脚本无法获得新版的事务保护。建议先备份原安装目录后完整安装 1.0.1，之后的更新与回滚使用新更新器。
 
 开发者发版只需一步：**改完代码 → 更新根目录 `VERSION`（如 `1.0.0` → `1.0.1`）→ push**。忘了 bump 版本号，用户端就不会拉到新代码。
 
 ## 📦 环境依赖
 
 - 任何支持 Skill 的 AI 工具（ZCode / Claude Code / Codex / Cursor / Gemini CLI 等）
-- 产出 docx 需要：**Node ≥ 18** + `docx` 库（`npm install docx image-size`）
+- 自更新和 docx 生成需要：**Node ≥ 18**。仓库内运行 `npm ci` 安装锁定版本；复制模板到其他项目时运行 `npm install docx@9.6.1 image-size@2.0.4`。
 - 产出截图需要：Playwright（或本机 Edge/Chromium）
+
+开发验证：Node 18+、Python 3.12+，运行 `npm ci` 后 `npm test`。回归覆盖原生公式内容、编号、图号、更新失败恢复、进程中断恢复、手动回滚和包完整性。GitHub Actions 分别在 Windows 与 Linux 上运行。Word 的实际分页仍须按交付清单渲染逐页检查。
 
 ## 📄 报告模板结构（十章）
 

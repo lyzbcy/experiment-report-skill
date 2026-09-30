@@ -1,0 +1,8 @@
+{
+  "name": "experiment-report-skill",
+  "version": "1.0.1",
+  "private": true,
+  "engines": { "node": ">=18" },
+  "scripts": { "test": "node --test tests/docx.test.cjs tests/updater.test.cjs" },
+  "dependencies": { "docx": "9.6.1", "image-size": "2.0.4" }
+}
