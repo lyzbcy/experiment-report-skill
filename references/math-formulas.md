@@ -2,7 +2,7 @@
 
 ## Design Philosophy
 
-GLM uses **LaTeX as the formula input syntax**, internally converting to docx-js Math objects.
+Use **LaTeX as the formula source notation**, then explicitly construct docx-js Math objects. This skill does not include an automatic LaTeX parser.
 
 **Why not write OMML directly?**
 - Models are naturally proficient in LaTeX (abundant in training data)
@@ -269,7 +269,7 @@ new Paragraph({
 ```
 
 **Fallback rules:**
-- Nested fractions >2 levels → fallback
+- Nested fractions >3 levels → fallback when the native path cannot be verified
 - Matrices/determinants → fallback
 - Complex integrals (multiple integrals + limits + integrand) → fallback
 - Piecewise functions → fallback
