@@ -7,3 +7,5 @@ verification/
 .update/previous.json
 .update/managed-files.json
 .update/backup-*/
+
+release/

@@ -122,3 +122,9 @@ node "<skill目录>/.update/updater.cjs" --rollback
 ## 📜 License
 
 MIT License
+
+## Skill Release包
+
+[最新可安装ZIP](https://github.com/lyzbcy/experiment-report-skill/releases/latest/download/experiment-report-skill.zip)可由捞鱼软件中心一键安装到用户目录 .agents/skills/experiment-report-skill。完整包包含SKILL.md、引用资料和必要的配套代码，安装不自动运行任务。
+
+示例：请用experiment-report-skill完成SARSA与Q-learning的真实对比实验，先给我可视化确认，再交付md和docx报告。

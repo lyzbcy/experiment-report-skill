@@ -1,0 +1,17 @@
+{
+  "repo": "experiment-report-skill",
+  "directory": "experiment-report-skill",
+  "version": "1.0.2",
+  "asset": "experiment-report-skill.zip",
+  "include": [
+    "SKILL.md",
+    "README.md",
+    "VERSION",
+    "LICENSE",
+    "package.json",
+    "package-lock.json",
+    ".update",
+    "references"
+  ],
+  "repository": "lyzbcy/experiment-report-skill"
+}
