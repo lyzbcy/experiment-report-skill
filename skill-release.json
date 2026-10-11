@@ -1,7 +1,7 @@
 {
   "repo": "experiment-report-skill",
   "directory": "experiment-report-skill",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "asset": "experiment-report-skill.zip",
   "include": [
     "SKILL.md",
