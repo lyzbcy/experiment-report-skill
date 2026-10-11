@@ -1,3 +1,3 @@
-experiment-report-skill 1.0.2
+experiment-report-skill 1.0.3
 
-提供完整、无账号数据的可安装Skill ZIP，通用目录为用户主目录 .agents/skills/experiment-report-skill。软件中心核验SHA-256后安装；同名本地文件保留，不在安装时执行脚本、创建定时任务或发布内容。首次使用请按SKILL.md准备依赖/登录。Release附件计数包含重复和更新下载，不代表独立用户。
+完整 Skill ZIP；默认每日首次使用静默检查最新正式 Release，核验 GitHub SHA-256 与逐文件清单。独立开关、用户运行数据保留、本地代码修改保护、原子目录提交及失败回滚。安装不执行任务或登录；依赖与本人登录按 SKILL.md 准备。旧正式发行保留。

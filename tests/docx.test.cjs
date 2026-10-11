@@ -5,7 +5,7 @@ const path = require('node:path');
 const os = require('node:os');
 const { deflateSync } = require('node:zlib');
 const { spawnSync } = require('node:child_process');
-const { crc32 } = require('../.update/updater.cjs');
+const crc32 = require('../.laoyu/lib/vendor/yauzl/crc32');
 const template = require('../references/templates/report_template_docx.js');
 
 function png(width, height) {

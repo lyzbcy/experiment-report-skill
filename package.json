@@ -1,13 +1,14 @@
 {
   "name": "experiment-report-skill",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "engines": {
     "node": ">=18"
   },
   "scripts": {
     "test": "node --test tests/docx.test.cjs tests/updater.test.cjs",
-    "release:skill": "python scripts/package-skill.py"
+    "release:skill": "python scripts/package-skill.py",
+    "skill:update": "node .laoyu/update.cjs"
   },
   "dependencies": {
     "docx": "9.6.1",

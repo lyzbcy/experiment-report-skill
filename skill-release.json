@@ -1,7 +1,7 @@
 {
   "repo": "experiment-report-skill",
   "directory": "experiment-report-skill",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "asset": "experiment-report-skill.zip",
   "include": [
     "SKILL.md",
@@ -11,7 +11,8 @@
     "package.json",
     "package-lock.json",
     ".update",
-    "references"
+    "references",
+    ".laoyu"
   ],
   "repository": "lyzbcy/experiment-report-skill"
 }
