@@ -128,3 +128,7 @@ MIT License
 [最新可安装ZIP](https://github.com/lyzbcy/experiment-report-skill/releases/latest/download/experiment-report-skill.zip)可由捞鱼软件中心一键安装到用户目录 .agents/skills/experiment-report-skill。完整包包含SKILL.md、引用资料和必要的配套代码，安装不自动运行任务。
 
 示例：请用experiment-report-skill完成SARSA与Q-learning的真实对比实验，先给我可视化确认，再交付md和docx报告。
+
+## 使用小结与经验贡献
+
+任务最终交付并获用户确认后，先总结问题、迭代与实现，再按[集思广益组件](references/community-contribution.md)评估并邀请脱敏PR；经同意才公开，合入后可署名或匿名。用户答复后清理本次临时贡献包，保护交付与私有运行资料。
