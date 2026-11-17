@@ -180,8 +180,7 @@ function buildReport(report, baseDir = process.cwd()) {
       coverLine(`课程：${report.cover.course}`, 28, 900), coverLine(`姓名 / 学号：${report.cover.student}`, 28, 180), coverLine(`日期：${report.cover.date}`, 28, 180)],
   }, {
     properties: { type: SectionType.NEXT_PAGE, page: { margin } },
-    children: [coverLine("目  录", 36), new TableOfContents("目录", { hyperlink: true, headingStyleRange: "1-2" }),
-      bodyNoIndent("（右键目录 → 更新域，可刷新页码）")],
+    children: [coverLine("目  录", 36), new TableOfContents("目录", { hyperlink: true, headingStyleRange: "1-2" })],
     // NEXT_PAGE on the body section supplies the page break. Do not add a second break.
   }, {
     properties: { type: SectionType.NEXT_PAGE, page: { margin, pageNumbers: { start: 1, formatType: NumberFormat.DECIMAL } } },

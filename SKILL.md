@@ -2,7 +2,7 @@
 name: experiment-report-skill
 description: >-
   Create a complete experiment report workflow with frontend visualization and structured markdown report.
-  Supports any experiment type — implementation, interactive frontend, screenshots, and md/docx delivery.
+  Supports any experiment type — implementation, interactive frontend, screenshots, and PDF/DOCX/Markdown delivery.
   Use for 实验报告、experiment report and experiment-related 前端展示 or 可视化报告, with visual confirmation before the final report.
 ---
 
@@ -26,7 +26,7 @@ description: >-
 - 最终报告中的图片优先来自前端实际渲染结果，不允许手工拼图或伪造图表。
 - 公式一律优先使用正式公式格式书写（Markdown/KaTeX），不要手工截成图片。
 - 用户未确认前端效果前，不要直接写最终版实验报告。
-- 始终执行完整报告流程，不由 AI 自动选择简化交付；前端、截图、md/docx 双交付和自检均须完成。
+- 始终执行完整报告流程，不由 AI 自动选择简化交付；前端、截图、PDF 正式版、Word 和 Markdown 源稿及自检均须完成。
 - 报告要写得足够详尽，不能只像任务摘要，要体现出完整实验思路、结果、分析和反思。
 - 实验报告中至少要有 4 张真实截图，而且截图要能看出页面确实经过认真排版。
 - 最后一章心得感悟要先压掉模板腔、总结腔和 AI 味，再放进报告。
@@ -41,6 +41,8 @@ description: >-
 - **算法/方法范围**：需要跑哪些方法，对比什么。
 - **交付物**：前端展示页面、实验报告.md、截图等。
 - **验收点**：怎样算实验完成。
+
+学校课程作业先从课程资料、作业附件和院校官网查找报告模板。按[学校模板与正式发布](references/school-report-publication.md)定封面、页边距、字体、标题、目录、图表和页码。
 
 ### 2. 先实现真实实验
 先把实验跑通，再做展示。
@@ -69,8 +71,7 @@ description: >-
 
 ### 5. 定稿前做人味化处理
 - 报告最后一章心得感悟先做自然化处理，去掉套话和过度工整的句式。
-- 不要把心得写成"总结一切、升华主题"的模板段落。
-- 保持真实、克制、像学生本人写的。
+- 从实际运行记录里选一个具体卡点，写清当时看到什么、怎么定位和调整、结果如何。用自然口语收尾，可以写实验哪里有趣和下次想试什么。个人经历和感受以本人确认内容为准，没有运行证据就回查，避免虚构踩坑。
 
 ### 6. 多轮自检修复（必做）
 **这是交付前的最后一道关卡，不可跳过。**
@@ -126,14 +127,14 @@ description: >-
 - 前端可直接展示，截图清晰，样式统一。
 - 前端必须先完成并经过用户确认，再写最终报告正文。
 - 用户确认效果之后，才写最终报告。
-- **最终报告同时产出两份：`实验报告.md` 和 `实验报告.docx`（缺一不可，详见「docx 交付规范」）。**
+- **最终报告交付 `实验报告.pdf`、`实验报告.docx` 和 `实验报告.md`。正式提交或发布默认使用 PDF；平台要求源码打包时将 PDF 与源码放进同一提交包。**
 - 心得感悟已做自然化处理。
 - 报告中所有图、表、结论都能追溯到实际数据。
 - **已完成至少 3 轮自检修复循环，且最后一轮无实质性问题。**
 - **每张截图已按 screenshot-manifest 执行，非随意截取。**
 - **截图自检通过：核心数据完整、标题未截断、无多余滚动条、无大面积空白。**
 - **截图文件路径与报告中的引用路径一致。**
-- **docx 自检通过：原生公式（非图片）/ 正文宋体五号 / 活序号 / 封面 / 目录 五项全部满足（见「docx 交付规范」）。**
+- **docx 自检通过：原生公式（非图片）/ 正文字体字号 / 活序号 / 封面 / 已更新的目录 五项全部满足（见「docx 交付规范」）。**
 
 ## docx 交付规范（强制，每次都要产出 docx）
 
@@ -141,25 +142,25 @@ description: >-
 
 ### 三条硬性要求
 1. **公式必须是原生 OMML，禁止用图片。** 用 docx 的 `Math`（`OoxmlMath`）/`MathFraction`/`MathSuperScript`/`MathSubScript`/`MathRadical`/`MathSum` 等组件构造分数、上下标、根号、求和。只有当公式嵌套超过 3 层、或为矩阵/分段函数时，才允许 matplotlib PNG 兜底（极少见，需在自检里注明）。详见 `references/math-formulas.md` 的 LaTeX→docx 映射表。
-2. **正文一律宋体五号。** 五号 = 10.5pt = **21 half-points**（`size: 21`）。字体必须三属性齐全：`font: { ascii: "Times New Roman", hAnsi: "Times New Roman", eastAsia: "宋体" }`——**只设 ascii 不设 eastAsia 是最常见的坑**，会导致中文落到默认字体上。标题用黑体，正文用宋体。
+2. **正文按已核实的院校或课程模板设置，通用模板默认宋体五号。** 五号 = 10.5pt = **21 half-points**（`size: 21`）。字体必须三属性齐全：`font: { ascii: "Times New Roman", hAnsi: "Times New Roman", eastAsia: "宋体" }`——**只设 ascii 不设 eastAsia 是最常见的坑**，会导致中文落到默认字体上。标题用黑体，正文用宋体。
 3. **序号用活序号（Word 自动编号），禁止死序号（手敲 1.2.3.）。** 用 `numbering` 的 abstractNum + `Paragraph({ numbering: { reference, level } })`。这样增删条目后序号自动重排。`步骤列表、目标列表、改进方向`等有顺序的内容都用活序号；无顺序的用项目符号。
 
 ### docx 结构标准
 - **封面页**：校名/课程名/作业名/姓名学号（占位待填）/日期。封面单独成节，封面节末尾不留多余 PageBreak。
-- **目录页**：用 `TableOfContents` 自动生成，正文节设置 `SectionType.NEXT_PAGE`，使正文从下一页开始；不要再叠加 `PageBreak`，避免空白页。目录页提示用户右键「更新域」刷新页码。
-- **正文**：从「一、实验名称」开始的十章结构（见 `references/templates/report_template.md`），正文页码从 1 开始重新计数。
-- **行距 1.5 倍**（`line: 360`），宋体五号正文首行缩进 2 字符（`firstLine: 420`）。
+- **目录页**：用 `TableOfContents` 自动生成，正文节设置 `SectionType.NEXT_PAGE`，使正文从下一页开始；不要再叠加 `PageBreak`，避免空白页。定稿后实际更新整个目录域并保存，复开核对可见条目和页码后再导出 PDF。
+- **正文**：按课程模板设置章节，通用模板从「一、实验名称」开始采用十章结构（见 `references/templates/report_template.md`），正文页码从 1 开始重新计数。
+- **通用模板**采用 1.5 倍行距（`line: 360`）及首行缩进 2 字符（宋体五号为 `firstLine: 420`）。院校模板另有要求时以其为准。
 - **图片**：截图必须带 `type: "png"`，按真实宽高比缩放，不要硬编宽高导致拉伸。
 
 ### docx 自检（产出后必做，逐项确认）
 用脚本解压 docx 检查 `word/document.xml`：
 - [ ] 存在 `<m:oMath>`（原生公式），且无 `<w:drawing>`/`<pic:pic>` 仅用于公式（公式不是图）
-- [ ] 正文段落 `w:sz w:val="21"` 且含 `w:eastAsia="宋体"`（宋体五号）
+- [ ] 正文段落字形字号符合选用模板。通用模板检查 `w:sz w:val="21"` 和 `w:eastAsia="宋体"`
 - [ ] 存在 `<w:numPr>` 且有 `word/numbering.xml` part（活序号自动编号）
 - [ ] 独立列表的编号实例不同，均从 1 开始；章节标题使用多级自动编号。
 - [ ] 检查公式基底和上下标的实际内容，不能只检查是否存在 `<m:oMath>`。
 - [ ] 图号按正文展示顺序连续，正文引用与图注一致；截图路径确实存在。
-- [ ] 存在封面节 + `TableOfContents`（目录）
+- [ ] 存在封面节和可编辑的目录域，包含已保存的目录结果及实际页码
 - [ ] 报告中所有数字与 `results/*.json` 一致（沿用 md 自检逻辑）
 
 ### docx 生成器模板
@@ -181,9 +182,9 @@ description: >-
 - 先做前端展示并让用户确认。
 - 从前端里截图，整理到实验报告中。
 - 等用户确认后再写报告。
-- **最终报告同时产出 `实验报告.md` 和 `实验报告.docx` 两份（见「docx 交付规范」）。**
+- **输出 PDF 正式版、Word 可编辑版和 Markdown 源稿。**
 - 最后一章心得感悟使用 humanizer 风格处理。
-- **交付前执行至少 3 轮自检修复循环（md 自检 + docx 自检都要过）。**
+- **交付前执行至少 3 轮自检修复循环（逐项核对 Markdown、Word 和 PDF）。**
 
 ## 截图清单方法论（Screenshot Manifest）
 
@@ -313,4 +314,4 @@ description: >-
 
 ## 使用结束：运行小结与可选贡献
 
-实验、前端、截图和md/docx最终报告按原流程完成，并且用户确认最终交付版完成且无返工后。用户只确认前端效果时仍需继续写报告，不是贡献邀请时机；报告刚生成、仍在修公式或排版时不问。按[集思广益提PR组件](references/community-contribution.md)先给本次运行小结，评估可迁移经验；值得时先准备脱敏草案，等用户确认最终完成后询问一次PR意愿，合入后按本人意愿署名或匿名。未同意不公开；用户答复后无论同意或拒绝，都按组件清理本次临时贡献包，保护正式交付与运行资料。多skill串联由末阶段合并收尾，不重复邀请。
+实验、前端、截图和 PDF、Word、Markdown 最终报告按原流程完成，并且用户确认最终交付版完成且无返工后。用户只确认前端效果时仍需继续写报告，不是贡献邀请时机；报告刚生成、仍在修公式或排版时不问。按[集思广益提PR组件](references/community-contribution.md)先给本次运行小结，评估可迁移经验；值得时先准备脱敏草案，等用户确认最终完成后询问一次PR意愿，合入后按本人意愿署名或匿名。未同意不公开；用户答复后无论同意或拒绝，都按组件清理本次临时贡献包，保护正式交付与运行资料。多skill串联由末阶段合并收尾，不重复邀请。
