@@ -1,6 +1,6 @@
 {
   "name": "experiment-report-skill",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "private": true,
   "engines": {
     "node": ">=18"

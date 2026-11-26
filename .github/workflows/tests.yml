@@ -17,3 +17,5 @@ jobs:
           python-version: '3.12'
       - run: npm ci
       - run: npm test
+      - run: python -m pip install pymupdf
+      - run: python tests/test_review_audit.py

@@ -3,7 +3,7 @@ name: experiment-report-skill
 description: >-
   Create a complete experiment report workflow with frontend visualization and structured markdown report.
   Supports any experiment type — implementation, interactive frontend, screenshots, and PDF/DOCX/Markdown delivery.
-  Use for 实验报告、experiment report and experiment-related 前端展示 or 可视化报告, with visual confirmation before the final report.
+  Use for 实验报告、experiment report、课程文献综述、调研报告 and experiment-related 前端展示 or 可视化报告.
 ---
 
 # 实验报告工作流 Skill
@@ -17,7 +17,13 @@ description: >-
 - 用户明确要求先确认效果，再开始写实验报告。
 - 用户希望实验报告贴近 docx 结构，后续还要转 Word、插图、统一标题样式和目录。
 
-## 工作原则
+## 先按教师要求分流
+
+- 实验报告：按下方完整真实实验、前端、截图、受托/本人评审、正式报告流程执行。
+- 独立综述/文献调研：用 [课程综述与长篇调研报告](references/review-report.md)。先核对原始通知、模板、篇幅及图量要求，检索可核验文献，安排实质章节，制作有来源的文献机制图、理论曲线或真实资料图；不强制运行无关实验、前端或凑实验截图。用户或受托评审确认正式稿，完成逐页排版、自检和交付。
+- 混合任务：分别保留实验与综述证据。后面的实验专属要求仅适用于实验部分。
+
+## 工作原则（实验报告）
 - 先做计划，再动手实现。
 - 先保证实验数据真实，再谈展示和排版。
 - 任何图表、数据都必须来自实际运行结果，不许用"看起来合理"的替代品。
@@ -314,4 +320,4 @@ description: >-
 
 ## 使用结束：运行小结与可选贡献
 
-实验、前端、截图和 PDF、Word、Markdown 最终报告按原流程完成，并且用户确认最终交付版完成且无返工后。用户只确认前端效果时仍需继续写报告，不是贡献邀请时机；报告刚生成、仍在修公式或排版时不问。按[集思广益提PR组件](references/community-contribution.md)先给本次运行小结，评估可迁移经验；值得时先准备脱敏草案，等用户确认最终完成后询问一次PR意愿，合入后按本人意愿署名或匿名。未同意不公开；用户答复后无论同意或拒绝，都按组件清理本次临时贡献包，保护正式交付与运行资料。多skill串联由末阶段合并收尾，不重复邀请。
+实验报告按实验流程，独立综述按文献与排版流程完成 PDF、Word、Markdown 正式稿，并且用户确认最终交付版完成且无返工后。用户只确认前端效果时仍需继续写报告，不是贡献邀请时机；报告刚生成、仍在修公式或排版时不问。按[集思广益提PR组件](references/community-contribution.md)先给本次运行小结，评估可迁移经验；值得时先准备脱敏草案，等用户确认最终完成后询问一次PR意愿，合入后按本人意愿署名或匿名。未同意不公开；用户答复后无论同意或拒绝，都按组件清理本次临时贡献包，保护正式交付与运行资料。多skill串联由末阶段合并收尾，不重复邀请。
